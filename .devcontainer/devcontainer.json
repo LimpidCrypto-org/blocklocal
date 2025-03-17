@@ -17,8 +17,8 @@
 				"swellaby.rust-pack",
 				"ms-kubernetes-tools.vscode-kubernetes-tools",
 				"fill-labs.dependi",
-				"DavidAnson.vscode-markdownlint",
-				"dineug.vuerd-vscode"
+				"dineug.vuerd-vscode",
+				"yzhang.markdown-all-in-one"
 			]
 		}
 	},
@@ -29,7 +29,8 @@
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
 	},
 	"forwardPorts": [
-		5432
+		5432,
+		8080
 	],
 	"initializeCommand": "chmod +x ./.devcontainer/init.sh && ./.devcontainer/init.sh",
 	"postStartCommand": "chmod +x ./.devcontainer/start.sh && ./.devcontainer/start.sh"
