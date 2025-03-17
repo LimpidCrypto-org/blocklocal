@@ -54,18 +54,20 @@ impl MigrationTrait for Migration {
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager
-            .drop_index(
-                Index::drop()
+            .drop_foreign_key(
+                ForeignKey::drop()
                     .table(UserHasRole::Table)
-                    .name(PK_USER_HAS_ROLE_USER_ID_PERMISSION_ID)
+                    .name(FK_USER_HAS_ROLE_USER_ID)
                     .to_owned(),
             )
             .await?;
         manager
-            .drop_foreign_key(ForeignKey::drop().name(FK_USER_HAS_ROLE_USER_ID).to_owned())
-            .await?;
-        manager
-            .drop_foreign_key(ForeignKey::drop().name(FK_USER_HAS_ROLE_ROLE_ID).to_owned())
+            .drop_foreign_key(
+                ForeignKey::drop()
+                    .table(UserHasRole::Table)
+                    .name(FK_USER_HAS_ROLE_ROLE_ID)
+                    .to_owned(),
+            )
             .await?;
         manager
             .drop_table(Table::drop().table(UserHasRole::Table).to_owned())

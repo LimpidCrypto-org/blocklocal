@@ -1,9 +1,9 @@
 use thiserror::Error;
 
-pub type Result<T> = std::result::Result<T, DbError>;
+pub type DbResult<T> = std::result::Result<T, DbError>;
 
 #[derive(Debug, Error)]
 pub enum DbError {
-    #[error("Database error: {0}")]
+    #[error(transparent)]
     DbError(#[from] sea_orm::error::DbErr),
 }

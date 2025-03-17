@@ -54,14 +54,6 @@ impl MigrationTrait for Migration {
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager
-            .drop_index(
-                Index::drop()
-                    .table(ProfileHasUser::Table)
-                    .name(PK_PROFILE_HAS_USER_PROFILE_ID_USER_ID)
-                    .to_owned(),
-            )
-            .await?;
-        manager
             .drop_foreign_key(
                 ForeignKey::drop()
                     .name(FK_PROFILE_HAS_USER_PROFILE_ID)

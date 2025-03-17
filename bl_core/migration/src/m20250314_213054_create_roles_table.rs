@@ -18,7 +18,7 @@ impl MigrationTrait for Migration {
                     .col(
                         string(Roles::CreatedAt)
                             .not_null()
-                            .default("CURRENT_TIMESTAMP"),
+                            .default(SimpleExpr::Keyword(Keyword::CurrentTimestamp)),
                     )
                     .to_owned(),
             )

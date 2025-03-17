@@ -56,14 +56,6 @@ impl MigrationTrait for Migration {
 
     async fn down(&self, manager: &SchemaManager) -> Result<(), DbErr> {
         manager
-            .drop_index(
-                Index::drop()
-                    .table(RoleHasPermission::Table)
-                    .name(PK_ROLE_HAS_PERMISSION_ROLE_ID_PERMISSION_ID)
-                    .to_owned(),
-            )
-            .await?;
-        manager
             .drop_foreign_key(
                 ForeignKey::drop()
                     .table(RoleHasPermission::Table)
