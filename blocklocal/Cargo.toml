@@ -3,11 +3,14 @@ name = "blocklocal"
 version = "0.1.0"
 edition = "2021"
 
-[features]
-compose-rs = ["dep:compose-rs"]
-
 [dependencies]
 compose-rs = { version = "0.0.3", optional = true }
-serde = { version = "1.0.217", features = ["derive"] }
-thiserror = { version = "2.0.11" }
+diesel = { version = "2.2.11", features = ["postgres"] }
+rand = "0.9.1"
+serde = { version = "1.0.219", features = ["derive"] }
+thiserror = { version = "2.0.12" }
 url = "2.5.4"
+
+[features]
+default = ["compose-rs"]
+docker-compose = ["compose-rs"]
