@@ -6,9 +6,6 @@ edition = "2021"
 [features]
 
 [dependencies]
-k3d = { path = "../k3d" }
-
-kube = "0.98.0"
 serde = { version = "1.0.217", features = ["derive"] }
 thiserror = { version = "2.0.11" }
 url = "2.5.4"

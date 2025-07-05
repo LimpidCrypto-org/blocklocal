@@ -1,5 +1,5 @@
-use k3d::{cluster::K3dNodeCmd, K3dCmd};
 use url::Url;
+use crate::errors::Result;
 
 #[derive(Debug)]
 pub struct Blockchain {
@@ -23,24 +23,20 @@ pub trait BlockchainNode {
     async fn delete(&self) -> Result<()>;
 }
 
-impl BlockchainCluster for Blockchain {
+impl BlockchainNode for Blockchain {
     async fn create(&self) -> Result<()> {
-        k3d::K3d::new().cluster().create(self.name).run().await?;
+        todo!()
     }
 
     async fn start(&self) -> Result<()> {
-        k3d::K3d::new().cluster().start(self.name).run().await?;
+        todo!()
     }
 
     async fn stop(&self) -> Result<()> {
-        k3d::K3d::new().cluster().stop(self.name).run().await?;
+        todo!()
     }
 
     async fn delete(&self) -> Result<()> {
-        k3d::K3d::new().cluster().delete(self.name).run().await?;
+        todo!()
     }
-}
-
-impl BlockchainNode for Blockchain {
-    async fn create(&self) -> Result<()> {}
 }

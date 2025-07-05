@@ -1,4 +1,4 @@
-use crate::errors::{Error, Result};
+use crate::errors::Result;
 
 pub trait ClientIO {
     async fn write(&mut self, request: &[u8]) -> Result<usize>;
