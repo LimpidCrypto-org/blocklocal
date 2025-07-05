@@ -1,0 +1,13 @@
+[package]
+name = "blocklocal"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+compose-rs = ["dep:compose-rs"]
+
+[dependencies]
+compose-rs = { version = "0.0.3", optional = true }
+serde = { version = "1.0.217", features = ["derive"] }
+thiserror = { version = "2.0.11" }
+url = "2.5.4"
