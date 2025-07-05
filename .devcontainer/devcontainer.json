@@ -2,20 +2,16 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/rust
 {
 	"name": "blocklocal",
-	"dockerFile": "Dockerfile",
-	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/workspaces/blocklocal",
 	"customizations": {
 		"vscode": {
 			"extensions": [
-				"p1c2u.docker-compose",
-				"ms-azuretools.vscode-docker",
-				"GitHub.copilot",
-				"GitHub.copilot-chat",
-				"waderyan.gitblame",
-				"donjayamanne.git-extension-pack",
 				"swellaby.rust-pack",
-				"ms-kubernetes-tools.vscode-kubernetes-tools",
-				"fill-labs.dependi"
+				"fill-labs.dependi",
+				"ms-azuretools.vscode-docker",
+				"DEVSENSE.composer-php-vscode"
 			]
 		}
 	},
@@ -23,11 +19,9 @@
 		"source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
 	],
 	"features": {
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
 	},
-	"forwardPorts": [
-		8080
-	],
+	"initializeCommand": "chmod +x ./.devcontainer/init.sh && ./.devcontainer/init.sh",
 	"postStartCommand": "chmod +x ./.devcontainer/start.sh && ./.devcontainer/start.sh"
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "privileged": true
