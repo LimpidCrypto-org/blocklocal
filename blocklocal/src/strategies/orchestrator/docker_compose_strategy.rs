@@ -85,5 +85,3 @@ impl OrchestratorStrategy for DockerComposeOrchestratorStrategy {
         Ok(())
     }
 }
-
-

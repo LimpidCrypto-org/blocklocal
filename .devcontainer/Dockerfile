@@ -8,7 +8,14 @@ RUN apt-get update \
     pkg-config \
     libssl-dev \
     libssl3 \
-    postgresql-client
+    postgresql-client \
+    openssh-server
+
+RUN service ssh start
+RUN echo 'vscode:vscode' | chpasswd \
+    && sed -i 's/^#*PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+EXPOSE 22
+RUN /usr/sbin/sshd
 
 # Install sea-orm-cli
 RUN cargo install diesel_cli

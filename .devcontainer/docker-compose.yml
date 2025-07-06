@@ -4,6 +4,8 @@ services:
       context: ..
       dockerfile: .devcontainer/Dockerfile
     command: sleep infinity
+    ports:
+      - "2222:22"
     volumes:
       - ..:/workspaces/blocklocal
     depends_on:
