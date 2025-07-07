@@ -2,6 +2,12 @@ use std::{fmt::Display, path::Path};
 
 pub mod docker_compose_strategy;
 
+#[derive(Debug, thiserror::Error)]
+pub enum OrchestratorError {
+    #[error("Docker Compose error: {0}")]
+    DockerComposeError(#[from] docker_compose_strategy::DockerComposeOrchestratorError),
+}
+
 pub struct Orchestrator<T: OrchestratorStrategy> {
     strategy: T,
 }
@@ -74,7 +80,6 @@ pub trait GetOrchestratorConfig {
     fn get_config(&self) -> &Path;
     fn get_config_mut(&mut self) -> &mut Path;
 }
-
 
 #[cfg(test)]
 mod tests {

@@ -1,5 +1,5 @@
-use url::Url;
 use crate::errors::Result;
+use url::Url;
 
 #[derive(Debug)]
 pub struct Blockchain {

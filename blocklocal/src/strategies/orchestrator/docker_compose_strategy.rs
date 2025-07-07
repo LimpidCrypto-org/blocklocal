@@ -1,6 +1,12 @@
-use std::{env::set_var, path::{Path, PathBuf}};
+use std::{
+    env::set_var,
+    path::{Path, PathBuf},
+};
 
-use crate::{strategies::orchestrator::{GetOrchestratorConfig, OrchestratorStrategy}, utils::random::generate_random_string};
+use crate::{
+    strategies::orchestrator::{GetOrchestratorConfig, OrchestratorStrategy},
+    utils::random::generate_random_string,
+};
 
 use compose_rs::{Compose, ComposeBuilder, ComposeBuilderError, ComposeCommand, ComposeError};
 
