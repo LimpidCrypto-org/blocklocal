@@ -1,5 +1,5 @@
 -- Your SQL goes here
-CREATE TABLE nodes (
+CREATE TABLE blockchains (
     id SERIAL PRIMARY KEY,
     hash VARCHAR(64) NOT NULL UNIQUE,
     url TEXT NOT NULL,

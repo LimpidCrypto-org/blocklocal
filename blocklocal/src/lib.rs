@@ -10,9 +10,10 @@ mod environment;
 mod models;
 mod schema;
 
+pub mod facades;
 pub mod managers;
 pub mod services;
-pub mod strategies;
+pub(crate) mod strategies;
 pub mod utils;
 
 pub mod blockchain;

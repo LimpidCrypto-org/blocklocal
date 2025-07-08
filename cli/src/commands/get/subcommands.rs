@@ -3,5 +3,5 @@ use clap::Subcommand;
 #[derive(Debug, Subcommand)]
 pub enum GetCommands {
     Clusters,
-    Nodes,
+    Blockchains,
 }

@@ -1,7 +1,7 @@
 // @generated automatically by Diesel CLI.
 
 diesel::table! {
-    nodes (id) {
+    blockchains (id) {
         id -> Int4,
         #[max_length = 64]
         hash -> Varchar,

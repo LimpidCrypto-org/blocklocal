@@ -4,15 +4,13 @@ use std::{
 };
 
 use crate::{
-    strategies::orchestrator::{GetOrchestratorConfig, OrchestratorStrategy},
+    strategies::orchestrator_strategy::{GetOrchestratorConfig, OrchestratorError, OrchestratorStrategy},
     utils::random::generate_random_string,
 };
 
 use compose_rs::{Compose, ComposeBuilder, ComposeBuilderError, ComposeCommand, ComposeError};
 
-pub struct DockerComposeOrchestratorStrategy {
-    config: PathBuf,
-}
+pub struct DockerComposeOrchestratorStrategy;
 
 #[derive(Debug, thiserror::Error)]
 pub enum DockerComposeOrchestratorError {
@@ -23,13 +21,9 @@ pub enum DockerComposeOrchestratorError {
 }
 
 impl DockerComposeOrchestratorStrategy {
-    pub fn new(config: PathBuf) -> Self {
-        DockerComposeOrchestratorStrategy { config }
-    }
-
-    fn build_compose_file(&self) -> Result<Compose, DockerComposeOrchestratorError> {
+    fn build_compose_file(&self, config: &Path) -> Result<Compose, DockerComposeOrchestratorError> {
         ComposeBuilder::new()
-            .path(self.config.to_str().ok_or_else(|| {
+            .path(config.to_str().ok_or_else(|| {
                 DockerComposeOrchestratorError::ComposeBuilderError(
                     ComposeBuilderError::MissingField("config path".to_string()),
                 )
@@ -39,54 +33,43 @@ impl DockerComposeOrchestratorStrategy {
     }
 }
 
-impl GetOrchestratorConfig for DockerComposeOrchestratorStrategy {
-    fn get_config(&self) -> &Path {
-        &self.config
-    }
-
-    fn get_config_mut(&mut self) -> &mut Path {
-        &mut self.config
-    }
-}
-
 impl OrchestratorStrategy for DockerComposeOrchestratorStrategy {
-    type Error = DockerComposeOrchestratorError;
-
-    fn create(&self) -> Result<(), Self::Error> {
+    fn create(&self, config: &Path) -> Result<(), OrchestratorError> {
         // Implementation for creating the Docker Compose services
-        let compose = self.build_compose_file()?;
+        let compose = self.build_compose_file(config)?;
+        compose.up().exec().map_err(DockerComposeOrchestratorError::from)?;
 
         todo!("Implement the create method for Docker Compose services");
 
         Ok(())
     }
 
-    fn up(&self) -> Result<(), Self::Error> {
+    fn up(&self, config: &Path) -> Result<(), OrchestratorError> {
         // Implementation for bringing up the Docker Compose services
-        let compose = self.build_compose_file()?;
+        let compose = self.build_compose_file(config)?;
         set_var("ID", generate_random_string(8)); // Set a random ID for the Docker Compose services
-        compose.up().exec()?;
+        compose.up().exec().map_err(DockerComposeOrchestratorError::from)?;
         set_var("ID", ""); // Clear the ID variable after use
 
         Ok(())
     }
 
-    fn down(&self) -> Result<(), Self::Error> {
+    fn down(&self, config: &Path) -> Result<(), OrchestratorError> {
         // Implementation for bringing down the Docker Compose services
         Ok(())
     }
 
-    fn status(&self) -> Result<(), Self::Error> {
+    fn status(&self, config: &Path) -> Result<(), OrchestratorError> {
         // Implementation for checking the status of the Docker Compose services
         Ok(())
     }
 
-    fn logs(&self) -> Result<(), Self::Error> {
+    fn logs(&self, config: &Path) -> Result<(), OrchestratorError> {
         // Implementation for fetching the logs of the Docker Compose services
         Ok(())
     }
 
-    fn restart(&self) -> Result<(), Self::Error> {
+    fn restart(&self, config: &Path) -> Result<(), OrchestratorError> {
         // Implementation for restarting the Docker Compose services
         Ok(())
     }

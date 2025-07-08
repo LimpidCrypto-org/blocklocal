@@ -17,7 +17,7 @@ pub struct GetArgs {
 }
 
 impl GetArgs {
-    pub fn get_k3s_nodes() -> Result<()> {
+    pub fn get_k3s_blockchains() -> Result<()> {
         match Command::new("sudo")
             .arg("k3d")
             .arg("")
@@ -38,7 +38,7 @@ impl GetArgs {
 impl BLCommand for GetArgs {
     fn run(&self) -> Result<()> {
         match &self.command {
-            GetCommands::Nodes => GetArgs::get_k3s_nodes()?,
+            GetCommands::Blockchains => GetArgs::get_k3s_blockchains()?,
             GetCommands::Clusters => println!("Getting clusters"),
         }
 
