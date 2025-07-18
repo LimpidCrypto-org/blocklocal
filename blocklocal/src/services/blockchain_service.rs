@@ -1,6 +1,6 @@
 use std::path::Path;
 
-use crate::{managers::ManagerError, services::ServiceError};
+use crate::{managers::ManagerError, services::ServiceError, strategies::blockchain_config_downloader_strategy::BlockchainConfigDownloaderStrategy, utils::random::generate_random_string};
 
 #[derive(Debug, thiserror::Error)]
 /// Represents errors that can occur in the blockchain service.
@@ -14,33 +14,14 @@ pub enum BlockchainServiceError {
 pub struct BlockchainService;
 
 impl BlockchainService {
-    const BLOCKCHAIN_CONFIG_HIERARCHY: &'static [&str] = &[
-        "<hash>/tmp", // Temporary directory for downloading, extracting, and processing blockchain configurations
-        "<hash>/config", // Directory containing the blockchain configuration files
-        "<hash>/orchestrations",
-        "<hash>/orchestrations/docker-compose"
-    ];
+    const BLOCKCHAIN_UNQ_HASH_LENGTH: usize = 16;
 
-    /// Validates the blockchain configuration hierarchy for a specific config hash.
-    pub fn validate_blockchain_config_hierarchy(
-        hash: &str,
-        config: &Path,
+    /// Downloads the blockchain configuration from the specified URL.
+    pub fn download_blockchain_config<T: BlockchainConfigDownloaderStrategy>(
+        url: &str,
+        strategy: T,
     ) -> Result<(), ServiceError> {
-        Self::BLOCKCHAIN_CONFIG_HIERARCHY
-            .iter()
-            .try_for_each(|&dir| {
-                let path = config.join(dir.replace("<hash>", hash));
-                if !path.exists() {
-                    Err(BlockchainServiceError::InvalidConfig(format!(
-                        "Missing directory: {}",
-                        path.display()
-                    )))
-                } else {
-                    Ok(())
-                }
-            })
-            .map_err(ServiceError::from)?;
-
+        let unq_hash = generate_random_string(16);
         Ok(())
     }
 }

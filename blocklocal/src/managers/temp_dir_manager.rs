@@ -4,9 +4,13 @@ use crate::{environment::Environment, managers::ManagerError};
 pub struct TempDirManager;
 
 impl TempDirManager {
+    const BLOCKCHAIN_CONFIG_HIERARCHY: &'static [&str] = &[
+        "<hash>/tmp", // Temporary directory for downloading, extracting, and processing blockchain configurations
+        "<hash>/config", // Directory containing the blockchain configuration files
+        "<hash>/orchestrations",
+        "<hash>/orchestrations/docker-compose"
+    ];
     const BLOCKCHAIN_CONFIGS_DIR: &'static str = "blockchain-configs";
-
-    const BLOCKCHAIN_CONFIG_HIERARCHY: &'static str = "<hash>/tmp";
 
     pub fn get_temp_dir() -> Result<String, ManagerError> {
         let temp_dir = Environment::new().get_app_tmp_dir();
